@@ -1,0 +1,189 @@
+* {
+	box-sizing: border-box;
+}
+
+body,
+html {
+	margin: 0;
+	padding: 0;
+}
+
+@viewport-width--small: (500rem/16);
+@viewport-width--medium: (1000rem/16);
+
+.weather {
+	--font-size--large: 3rem;
+	--font-size--normal: 1.5rem;
+	--font-size--small: 1rem;
+
+	--background--primary: white;
+	--background--secondary: whitesmoke;
+	--background--tertiary: gainsboro;
+
+	--border-round--small: 0.3rem;
+	--border-round--medium: 0.5rem;
+	--border-round--large: 1rem;
+
+	--padding--small: 0.5rem;
+	--padding--medium: 1.1rem;
+	--padding--large: 2rem;
+
+	--box-shadow--small: 1px 1px 4px 0 var(--background--tertiary);
+	--box-shadow--medium: 2px 2px 7px 0 var(--background--tertiary);
+
+	blockquote {
+		border-left: 5px solid var(--background--tertiary);
+		margin: 0;
+		padding-left: 5px;
+	}
+	p,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		margin: 0;
+	}
+
+	margin: var(--padding--large) auto;
+	border-radius: var(--padding--medium);
+	overflow: hidden;
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: minmax(min-content, 15rem) 1fr;
+	@media (max-width: @viewport-width--medium) {
+		grid-template-rows: minmax(min-content, 10rem) 1fr;
+		grid-template-columns: 1fr;
+	}
+	max-width: 70vw;
+
+	box-shadow: var(--box-shadow--medium);
+
+	& > aside {
+		height: 100%;
+		padding: var(--padding--medium);
+		display: grid;
+
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr;
+		grid-auto-rows: max-content;
+		justify-content: stretch;
+
+		grid-template-areas: "icon" "day-of-month" "day-of-week" "description";
+
+		row-gap: var(--padding--small);
+		column-gap: var(--padding--medium);
+		& > .large-icon {
+			grid-area: icon;
+			max-height: 100%;
+			max-width: 100%;
+			width: 100vw;
+			height: max-content;
+			margin-bottom: var(--padding--small);
+			align-self: start;
+		}
+		& > .day-of-month {
+			grid-area: day-of-month;
+			font-size: var(--font-size--large);
+		}
+		& > .day-of-week {
+			grid-area: day-of-week;
+			font-size: var(--font-size--small);
+		}
+		& > .long-description {
+			grid-area: description;
+			margin-top: var(--padding--small);
+			font-size: var(--font-size--small);
+		}
+		@media (max-width: @viewport-width--medium) and (min-width: @viewport-width--small) {
+			row-gap: 0;
+			grid-template-columns: minmax(min-content, 6rem) auto 1fr;
+			grid-template-rows: repeat(2, 1fr);
+			grid-template-areas:
+				"icon day-of-month day-of-week"
+				"icon description description";
+			& > .large-icon {
+				max-height: 100%;
+				margin: 0;
+				align-self: center;
+			}
+			& > .day-of-month,
+			& > .day-of-week {
+				font-size: var(--font-size--large);
+				font-weight: bold;
+			}
+		}
+		@media (max-width: @viewport-width--small) {
+			text-align: center;
+			& > .large-icon {
+				max-height: 3rem;
+			}
+			& > blockquote {
+				text-align: initial;
+			}
+		}
+	}
+	& > section.main {
+		background-color: var(--background--secondary);
+		& > .week-descriptions {
+			& > .label {
+				font-size: var(--font-size--large);
+				margin: var(--padding--medium);
+				line-height: 1;
+			}
+			& > .descriptions {
+				margin: var(--padding--medium);
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(10ch, 1fr));
+				grid-auto-rows: 1fr;
+				gap: var(--padding--medium);
+				& > div {
+					text-align: center;
+					box-shadow: 1px 1px 4px 0 var(--background--tertiary);
+					padding: var(--padding--medium);
+					border-radius: var(--border-round--medium);
+					background-color: var(--background--primary);
+					& > .day-of-week {
+						font-size: var(--font-size--normal);
+					}
+					& > .temperature {
+						font-size: var(--font-size--small);
+					}
+				}
+			}
+		}
+		& > .stats {
+			& > .label {
+				font-size: var(--font-size--large);
+				margin: var(--padding--medium);
+				line-height: 1;
+			}
+			& > div {
+				margin: var(--padding--medium);
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(20ch, 1fr));
+				gap: var(--padding--medium);
+				& > div {
+					flex-grow: 1;
+					padding: var(--padding--medium) var(--padding--large);
+					border-radius: var(--border-round--medium);
+					background-color: var(--background--primary);
+					box-shadow: var(--box-shadow--small);
+					& > .name {
+						font-size: var(--font-size--normal);
+					}
+					& > .value {
+						font-size: var(--font-size--large);
+						text-overflow: ellipsis;
+						overflow-x: hidden;
+						max-width: 100%;
+					}
+					& > .judgement {
+						font-size: var(--font-size--small);
+					}
+				}
+			}
+		}
+	}
+}
